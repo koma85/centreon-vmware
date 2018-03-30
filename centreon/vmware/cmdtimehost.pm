@@ -119,8 +119,8 @@ sub run {
                 my $time = $host_dts_view->QueryDateTime();
                 my $timestamp = Date::Parse::str2time($time);
                 my $offset = $localtime - $timestamp;
-                
-                my $exit = $self->{manager}->{perfdata}->threshold_check(value => $offset, threshold => [ { label => 'critical_time', exit_litteral => 'critical' }, { label => 'warning_time', exit_litteral => 'warning' } ]);
+                my $abs_offset = abs($offset);
+                my $exit = $self->{manager}->{perfdata}->threshold_check(value => $abs_offset, threshold => [ { label => 'critical_time', exit_litteral => 'critical' }, { label => 'warning_time', exit_litteral => 'warning' } ]);
                 $self->{manager}->{output}->output_add(long_msg => sprintf("'%s' date: %s, offset: %s second(s)", 
                                                                            $entity_view->{name},
                                                                            $time, $offset));
